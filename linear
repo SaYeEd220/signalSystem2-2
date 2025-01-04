@@ -1,0 +1,71 @@
+
+clc;    clear;   close all;
+%% Linearity Proof of the system: y = -(x/2)
+   Fs = 100;      % Sampling frequency (100Hz)
+   ts = 1/Fs;     % Sampling time interval
+   a = 1;   Fc_1 = 1;   b = 1;   Fc_2 = 3;
+   ind = 1;   x = [];
+    for n = 0:Fs
+        x1(ind) = a*sin(2*pi*Fc_1*n*ts);
+        x2(ind) = b*sin(2*pi*Fc_2*n*ts);
+        ind = ind + 1;
+    end
+    x3 = x1 + x2;    
+   
+% Plot the discrete-time signals values x1, x2 and x3:
+   t = 0:Fs;
+   figure(1);   
+   plot(t,x1,'k--*');   grid on;
+   xlabel('Time (0.01 second)');     ylabel('Signal amplitude')
+   title('x1 signal (frequency 1Hz)');   zoom xon;   
+  
+   figure(2);   
+   plot(t,x2,'b--*');   grid on;
+   xlabel('Time (0.01 second)');     ylabel('Signal amplitude')
+   title('x2 signal (frequency 3Hz)');   zoom xon;
+   
+   figure(3);   
+   plot(t,x3,'r--*');   grid on;
+   xlabel('Time (0.01 second)');     ylabel('Signal amplitude')
+   title('x3 signal (x1 + x2)');   zoom xon;
+   
+%% Discrete system input-output relation:   y = -(x/2)
+% For input x1 the output is:
+y1 = -(x1/2);
+   figure(4);   
+   plot(t,y1,'b--*');   grid on;
+   xlabel('Time (0.01 second)');     ylabel('Signal amplitude')
+   title('y1 signal (frequency 1Hz)');   zoom xon; 
+
+% For input x2 the output is:
+y2 = -(x2/2);
+   figure(5);   
+   plot(t,y2,'b--*');   grid on;
+   xlabel('Time (0.01 second)');     ylabel('Signal amplitude')
+   title('y2 signal (frequency 3Hz)');   zoom xon;
+
+% For input x3 the output is:
+y3 = -(x3/2);
+   figure(6);   
+   plot(t,y3,'r--*');   grid on;
+   xlabel('Time (0.01 second)');     ylabel('Signal amplitude')
+   title('y3 signal (system output of x3)');   zoom xon;
+
+%% The sum of the outputs for x1 and x2:
+ys = y1 + y2;
+   figure(7);   
+   plot(t,ys,'b--*');   grid on;
+   xlabel('Time (0.01 second)');     ylabel('Signal amplitude')
+   title('ys signal (y1 + y2)');   zoom xon;
+
+%% Checking whether the system is linear or non-linear
+Linearity_check = sum(abs(y3 - ys));
+if Linearity_check == 0
+    disp('The System is Linear')
+else
+    disp('The System is Not Linear')
+end
+
+
+   
+    
